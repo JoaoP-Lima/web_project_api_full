@@ -50,21 +50,23 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
   email,
   password,
 ) {
-  return this.findOne({ email }).select('+password').then((user) => {
-    if (!user) {
-      const authError = new Error('E-mail ou senha incorretos');
-      authError.statusCode = 401;
-      return Promise.reject(authError);
-    }
-    return bcrypt.compare(password, user.password).then((matched) => {
-      if (!matched) {
+  return this.findOne({ email })
+    .select('+password')
+    .then((user) => {
+      if (!user) {
         const authError = new Error('E-mail ou senha incorretos');
         authError.statusCode = 401;
         return Promise.reject(authError);
       }
-      return user;
+      return bcrypt.compare(password, user.password).then((matched) => {
+        if (!matched) {
+          const authError = new Error('E-mail ou senha incorretos');
+          authError.statusCode = 401;
+          return Promise.reject(authError);
+        }
+        return user;
+      });
     });
-  });
 };
 
 module.exports = mongoose.model('user', userSchema);

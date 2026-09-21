@@ -12,10 +12,10 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-const { PORT = 3000 } = process.env;
+const { PORT } = process.env;
 
 mongoose
-  .connect('mongodb://localhost:27017/aroundb')
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log('Conectado ao MongoDB');
   })
@@ -33,11 +33,6 @@ app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);
 });
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('O servidor travará agora');
-  }, 0);
-});
 app.post(
   '/signin',
   celebrate({

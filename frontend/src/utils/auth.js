@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.around.sonofjohn.ca";
+export const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -31,9 +31,9 @@ export const checkToken = (token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => {
-   return res.ok ? res.json() : Promise.reject(res)
+    return res.ok ? res.json() : Promise.reject(res);
   });
 };

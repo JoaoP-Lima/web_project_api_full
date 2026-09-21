@@ -127,9 +127,7 @@ class Api {
         ...this.headers,
         authorization: `Bearer ${this.token}`,
       },
-      body: JSON.stringify({
-        avatar: avatar,
-      }),
+      body: JSON.stringify(avatar),
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -141,7 +139,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://api.around.sonofjohn.ca",
+  baseUrl: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": "application/json",
   },

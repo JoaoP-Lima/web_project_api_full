@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 import Header from "./Header/Header";
@@ -139,7 +140,8 @@ function App() {
   };
 
   const handleUpdateAvatar = (avatar) => {
-    return api.setUserAvatar(avatar.avatar).then((newData) => {
+    return api.setUserAvatar(avatar).then((newData) => {
+      
       setCurrentUser((prevUser) => ({
         ...prevUser,
         avatar: newData.avatar,
