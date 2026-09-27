@@ -15,6 +15,11 @@ module.exports = (err, req, res, next) => {
     message = 'Recurso não encontrado';
   }
 
+  if (err.code === 11000) {
+    statusCode = 409;
+    message = 'O recurso já existe';
+  }
+
   res.status(statusCode).send({
     message: statusCode === 500 ? 'Erro no servidor' : message,
   });
